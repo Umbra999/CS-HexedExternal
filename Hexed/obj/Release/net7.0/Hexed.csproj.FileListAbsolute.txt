@@ -1,0 +1,17 @@
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\Hexed.exe
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\Hexed.deps.json
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\Hexed.runtimeconfig.json
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\Hexed.dll
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\Hexed.pdb
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.csproj.AssemblyReference.cache
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.AssemblyInfoInputs.cache
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.AssemblyInfo.cs
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.csproj.CoreCompileInputs.cache
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.dll
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\refint\Hexed.dll
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.pdb
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.genruntimeconfig.cache
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\ref\Hexed.dll
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\Newtonsoft.Json.dll
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.csproj.CopyComplete

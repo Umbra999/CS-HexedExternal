@@ -1,0 +1,2 @@
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\publish\win-x64\Hexed.pdb
+C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\publish\win-x64\Hexed.exe
