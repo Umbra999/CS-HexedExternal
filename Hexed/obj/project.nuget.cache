@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WuqzPhddFs02x9q2f2xk2yu7zZMMDIXp8adFyIp9h047F/2IUc5jrd7FpTw5cefcnTYnaEeldpAnXWbyFLYGDA==",
+  "dgSpecHash": "Q39Yb+aWRbx7m0SlmGLeusnPFFItPHtD21L6F2wSUmnKRp8midOp7HrJFIwssGb3IaTE7YnhR9j6QZNPCCf34A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Umbra\\source\\repos\\HexedCS-External\\Hexed\\Hexed.csproj",
+  "projectFilePath": "D:\\Github Repos\\CS-HexedExternal\\Hexed\\Hexed.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Umbra\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512"
   ],

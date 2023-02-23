@@ -15,3 +15,20 @@ C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.genr
 C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\ref\Hexed.dll
 C:\Users\Umbra\source\repos\HexedCS-External\Hexed\bin\Release\net7.0\Newtonsoft.Json.dll
 C:\Users\Umbra\source\repos\HexedCS-External\Hexed\obj\Release\net7.0\Hexed.csproj.CopyComplete
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\Hexed.exe
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\Hexed.deps.json
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\Hexed.runtimeconfig.json
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\Hexed.dll
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\Hexed.pdb
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\Newtonsoft.Json.dll
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.csproj.AssemblyReference.cache
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.GeneratedMSBuildEditorConfig.editorconfig
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.AssemblyInfoInputs.cache
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.AssemblyInfo.cs
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.csproj.CoreCompileInputs.cache
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.csproj.CopyComplete
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.dll
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\refint\Hexed.dll
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.pdb
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\Hexed.genruntimeconfig.cache
+D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0\ref\Hexed.dll

@@ -17,6 +17,7 @@ namespace Hexed.Core
             var task = Task.Run(() => ServerHandler.Init());
             task.Wait();
 
+            Config.LoadConfig();
             Logger.Log($"Waiting for Process...");
 
             while (MemorySettings.Memory == null)

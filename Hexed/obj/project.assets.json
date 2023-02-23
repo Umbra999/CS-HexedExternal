@@ -61,11 +61,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Umbra\\source\\repos\\HexedCS-External\\Hexed\\Hexed.csproj",
+      "projectUniqueName": "D:\\Github Repos\\CS-HexedExternal\\Hexed\\Hexed.csproj",
       "projectName": "Hexed",
-      "projectPath": "C:\\Users\\Umbra\\source\\repos\\HexedCS-External\\Hexed\\Hexed.csproj",
+      "projectPath": "D:\\Github Repos\\CS-HexedExternal\\Hexed\\Hexed.csproj",
       "packagesPath": "C:\\Users\\Umbra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Umbra\\source\\repos\\HexedCS-External\\Hexed\\obj\\",
+      "outputPath": "D:\\Github Repos\\CS-HexedExternal\\Hexed\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

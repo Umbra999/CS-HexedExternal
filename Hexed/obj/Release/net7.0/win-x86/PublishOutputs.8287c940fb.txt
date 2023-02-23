@@ -1,0 +1,2 @@
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\publish\win-x86\Hexed.pdb
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0\publish\win-x86\Hexed.exe

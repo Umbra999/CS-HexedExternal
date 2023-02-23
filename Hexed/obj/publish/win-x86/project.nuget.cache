@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a2sADQUMmA2VbtyBYkZKn5eJ7uN1jUhGMiH2xi+ahjypYO+tdwy3nLrejMnLxtnnDkU++IwJ9Th1Xxvh5WMwSA==",
+  "dgSpecHash": "8GsI4qxa/Di6UF1qht5F2MxO75ev8tCLYn58Sk9WjmyUxrgJjwyuxVgeAUB+d2dtNvHDDiBeawnDqjCwy1MJTA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Umbra\\source\\repos\\HexedCS-External\\Hexed\\Hexed.csproj",
+  "projectFilePath": "D:\\Github Repos\\CS-HexedExternal\\Hexed\\Hexed.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Umbra\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
     "C:\\Users\\Umbra\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\7.0.2\\microsoft.netcore.app.runtime.win-x86.7.0.2.nupkg.sha512",
