@@ -1,4 +1,6 @@
-﻿namespace Hexed.Memory.Manager
+﻿using Hexed.Core;
+
+namespace Hexed.Memory.Manager
 {
     internal static class NetvarManager
     {
@@ -14,10 +16,10 @@
 
         private static IntPtr SearchInSubSubTable(IntPtr subTable, string searchFor)
         {
-            IntPtr current = MemorySettings.Memory.Read<IntPtr>(MemorySettings.Memory.Read<IntPtr>(subTable + 0x28));
+            IntPtr current = MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(subTable + 0x28));
             while (true)
             {
-                string entryName = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(current));
+                string entryName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current));
 
                 if (entryName == "") break;
 
@@ -25,11 +27,11 @@
 
                 if (entryName.Length > 3)
                 {
-                    IntPtr offset = MemorySettings.Memory.Read<IntPtr>(current + 0x2C);
+                    IntPtr offset = MemoryHandler.Memory.Read<IntPtr>(current + 0x2C);
                     if (entryName.Equals(searchFor)) return offset;
                 }
 
-                IntPtr subSubTable = MemorySettings.Memory.Read<IntPtr>(current + 0x28);
+                IntPtr subSubTable = MemoryHandler.Memory.Read<IntPtr>(current + 0x28);
 
                 if (subSubTable != IntPtr.Zero)
                 {
@@ -48,7 +50,7 @@
             IntPtr current = subTable;
             while (true)
             {
-                string entryName = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(current));
+                string entryName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current));
 
                 if (entryName == "") break;
 
@@ -72,7 +74,7 @@
                     if (a != IntPtr.Zero) return a;
                 }
 
-                int subSubTable = MemorySettings.Memory.Read<int>(current + 0x28);
+                int subSubTable = MemoryHandler.Memory.Read<int>(current + 0x28);
 
                 if (subSubTable > 0)
                 {
@@ -80,7 +82,7 @@
                     if (a != IntPtr.Zero) return a;
                 }
 
-                IntPtr offset = MemorySettings.Memory.Read<IntPtr>(current + 0x2C);
+                IntPtr offset = MemoryHandler.Memory.Read<IntPtr>(current + 0x2C);
                 if (entryName == searchFor) return offset;
 
                 current += 0x3C;
@@ -94,9 +96,9 @@
             IntPtr a = SearchInSubtable(baseClass + 0x3C, searchFor);
             if (a != IntPtr.Zero) return a;
 
-            string className = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(baseClass));
+            string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(baseClass));
 
-            if (className == "baseclass") return SearchInBaseClass(MemorySettings.Memory.Read<IntPtr>(MemorySettings.Memory.Read<IntPtr>(baseClass + 0x28)), searchFor);
+            if (className == "baseclass") return SearchInBaseClass(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(baseClass + 0x28)), searchFor);
 
             return IntPtr.Zero;
         }
@@ -106,9 +108,9 @@
             IntPtr a = SearchInSubtable(csLocalData + 0x28, searchFor);
             if (a != IntPtr.Zero) return a;
 
-            string className = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(csLocalData));
+            string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(csLocalData));
 
-            if (className == "cslocaldata") return SearchInBaseClass(MemorySettings.Memory.Read<IntPtr>(MemorySettings.Memory.Read<IntPtr>(csLocalData + 0x28)), searchFor);
+            if (className == "cslocaldata") return SearchInBaseClass(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(csLocalData + 0x28)), searchFor);
 
             return IntPtr.Zero;
         }
@@ -119,21 +121,21 @@
 
             if (a != IntPtr.Zero) return a;
 
-            string className = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(localData));
+            string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(localData));
 
-            if (className == "localdata") return SearchInBaseClass(MemorySettings.Memory.Read<IntPtr>(MemorySettings.Memory.Read<IntPtr>(localData + 0x28)), searchFor);
+            if (className == "localdata") return SearchInBaseClass(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(localData + 0x28)), searchFor);
 
             return IntPtr.Zero;
         }
 
         private static IntPtr SearchInTableFor(IntPtr table, string searchFor)
         {
-            IntPtr current = MemorySettings.Memory.Read<IntPtr>(MemorySettings.Memory.Read<IntPtr>(table + 0xC));
+            IntPtr current = MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(table + 0xC));
             while (true)
             {
-                if (MemorySettings.Memory.Read<IntPtr>(current) == IntPtr.Zero) break;
+                if (MemoryHandler.Memory.Read<IntPtr>(current) == IntPtr.Zero) break;
 
-                string entryName = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(current));
+                string entryName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current));
 
                 if (entryName.Length < 1) break;
 
@@ -143,7 +145,7 @@
 
                 if (entryName == "localdata") return SearchInLocalData(current, searchFor);
 
-                IntPtr offset = MemorySettings.Memory.Read<IntPtr>(current + 0x2C);
+                IntPtr offset = MemoryHandler.Memory.Read<IntPtr>(current + 0x2C);
                 if (entryName.Equals(searchFor)) return offset;
 
                 current += 0x3C;
@@ -159,12 +161,12 @@
 
             while (true)
             {
-                string className = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(current + 0x8));
-                string tableName = MemorySettings.Memory.ReadString(MemorySettings.Memory.Read<IntPtr>(MemorySettings.Memory.Read<IntPtr>(current + 0xC) + 0xC));
+                string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current + 0x8));
+                string tableName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(current + 0xC) + 0xC));
 
                 if (className.Equals(wantedTable) || tableName.Equals(wantedTable)) return current;
 
-                current = MemorySettings.Memory.Read<IntPtr>(current + 0x10);
+                current = MemoryHandler.Memory.Read<IntPtr>(current + 0x10);
                 if (current == IntPtr.Zero) break;
             }
 

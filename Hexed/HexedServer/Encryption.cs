@@ -40,21 +40,17 @@ namespace Hexed.HexedServer
             return (byte)Random.Next(0, 255);
         }
 
-        public static string EncryptAuthKey(string Key, string Timestamp, string ValidationType, string HWID)
+        public static string EncryptAuthKey(string Key, string Timestamp, string HWID)
         {
-            string EncryptedKey = ValidationType;
-            EncryptedKey += ":";
+            string EncryptedKey = "";
             EncryptedKey += ToBase64(Timestamp);
             EncryptedKey += ":";
             EncryptedKey += ToBase64(HWID);
             EncryptedKey += ":";
             EncryptedKey += ToBase64(Key);
-            EncryptedKey += "98NXvV3d";
-            EncryptedKey += ToBase64("10792dC");
 
-            return ToBase64(EncryptedKey);
+            return ToBase64(EncryptedKey) + RandomString(3);
         }
-
 
         // HWID
         public static string GetHWID()
@@ -83,10 +79,10 @@ namespace Hexed.HexedServer
 
         private static string GetProcessorID()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\CentralProcessor\0");
+            using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\CentralProcessor\0");
             if (key != null)
             {
-                return key.GetValue("Identifier").ToString();
+                return key.GetValue("Identifier")?.ToString();
             }
 
             return "";
@@ -94,10 +90,10 @@ namespace Hexed.HexedServer
 
         private static string GetProcessorName()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\CentralProcessor\0");
+            using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\CentralProcessor\0");
             if (key != null)
             {
-                return key.GetValue("ProcessorNameString").ToString();
+                return key.GetValue("ProcessorNameString")?.ToString();
             }
 
             return "";
@@ -105,10 +101,10 @@ namespace Hexed.HexedServer
 
         private static string GetBIOSVendor()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\BIOS");
+            using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\BIOS");
             if (key != null)
             {
-                return key.GetValue("BaseBoardManufacturer").ToString();
+                return key.GetValue("BaseBoardManufacturer")?.ToString();
             }
 
             return "";
@@ -116,10 +112,10 @@ namespace Hexed.HexedServer
 
         private static string GetBIOSName()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\BIOS");
+            using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\BIOS");
             if (key != null)
             {
-                return key.GetValue("BaseBoardProduct").ToString();
+                return key.GetValue("BaseBoardProduct")?.ToString();
             }
 
             return "";
@@ -127,10 +123,10 @@ namespace Hexed.HexedServer
 
         private static string GetDriveName()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DEVICEMAP\Scsi\Scsi Port 0\Scsi Bus 0\Target Id 0\Logical Unit Id 0");
+            using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DEVICEMAP\Scsi\Scsi Port 0\Scsi Bus 0\Target Id 0\Logical Unit Id 0");
             if (key != null)
             {
-                return key.GetValue("Identifier").ToString();
+                return key.GetValue("Identifier")?.ToString();
             }
 
             return "";
@@ -138,10 +134,10 @@ namespace Hexed.HexedServer
 
         private static string GetDriveID()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DEVICEMAP\Scsi\Scsi Port 0\Scsi Bus 0\Target Id 0\Logical Unit Id 0");
+            using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DEVICEMAP\Scsi\Scsi Port 0\Scsi Bus 0\Target Id 0\Logical Unit Id 0");
             if (key != null)
             {
-                return key.GetValue("SerialNumber").ToString();
+                return key.GetValue("SerialNumber")?.ToString();
             }
 
             return "";

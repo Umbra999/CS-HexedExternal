@@ -1,7 +1,7 @@
 ﻿using Hexed.Memory.Manager;
-using Hexed.Memory;
 using Hexed.Wrappers;
 using System.Numerics;
+using Hexed.Core;
 
 namespace Hexed.SDK
 {
@@ -28,7 +28,7 @@ namespace Hexed.SDK
                     Thread.Sleep(10);
                     clientState = SignatureManager.GetClientState();
                 }
-                return MemorySettings.Memory.Read<IntPtr>(clientState);
+                return MemoryHandler.Memory.Read<IntPtr>(clientState);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Hexed.SDK
             {
                 if (signOnState == IntPtr.Zero)
                     signOnState = SignatureManager.GetSignOnState();
-                return MemorySettings.Memory.Read<int>(ClientState.Add(signOnState)) == 0;
+                return MemoryHandler.Memory.Read<int>(ClientState.Add(signOnState)) == 0;
             }
         }
 
@@ -48,7 +48,7 @@ namespace Hexed.SDK
             {
                 if (signOnState == IntPtr.Zero)
                     signOnState = SignatureManager.GetSignOnState();
-                var state = MemorySettings.Memory.Read<int>(ClientState.Add(signOnState));
+                var state = MemoryHandler.Memory.Read<int>(ClientState.Add(signOnState));
                 return state > 1 || state < 7;
             }
         }
@@ -61,7 +61,7 @@ namespace Hexed.SDK
                 {
                     localIndex = SignatureManager.GetLocalIndex();
                 }
-                var index = MemorySettings.Memory.Read<int>(ClientState.Add(localIndex));
+                var index = MemoryHandler.Memory.Read<int>(ClientState.Add(localIndex));
                 return index;
             }
         }
@@ -74,7 +74,7 @@ namespace Hexed.SDK
                 {
                     cmdNumber = SignatureManager.GetCmdNumber();
                 }
-                var num = MemorySettings.Memory.Read<int>(ClientState.Add(cmdNumber));
+                var num = MemoryHandler.Memory.Read<int>(ClientState.Add(cmdNumber));
                 return num;
             }
         }
@@ -87,7 +87,7 @@ namespace Hexed.SDK
                 {
                     sendPacket = SignatureManager.GetSendPacket();
                 }
-                return MemorySettings.Memory.Read<bool>(sendPacket);
+                return MemoryHandler.Memory.Read<bool>(sendPacket);
             }
             set
             {
@@ -95,7 +95,7 @@ namespace Hexed.SDK
                 {
                     sendPacket = SignatureManager.GetSendPacket();
                 }
-                MemorySettings.Memory.Write(sendPacket, value);
+                MemoryHandler.Memory.Write(sendPacket, value);
             }
         }
 
@@ -107,7 +107,7 @@ namespace Hexed.SDK
                 {
                     mapName = SignatureManager.GetMapName();
                 }
-                var name = MemorySettings.Memory.ReadString(ClientState.Add(mapName));
+                var name = MemoryHandler.Memory.ReadString(ClientState.Add(mapName));
                 return name;
             }
         }
@@ -120,7 +120,7 @@ namespace Hexed.SDK
                 {
                     gameDir = SignatureManager.GetGameDir();
                 }
-                return MemorySettings.Memory.ReadString(gameDir);
+                return MemoryHandler.Memory.ReadString(gameDir);
             }
         }
 
@@ -143,12 +143,12 @@ namespace Hexed.SDK
             get
             {
                 if (viewAngle == IntPtr.Zero) viewAngle = SignatureManager.GetViewAngle();
-                return MemorySettings.Memory.Read<Vector3>(ClientState.Add(viewAngle));
+                return MemoryHandler.Memory.Read<Vector3>(ClientState.Add(viewAngle));
             }
             set
             {
                 if (viewAngle == IntPtr.Zero) viewAngle = SignatureManager.GetViewAngle();
-                MemorySettings.Memory.Write(ClientState.Add(viewAngle), value);
+                MemoryHandler.Memory.Write(ClientState.Add(viewAngle), value);
 
             }
         }

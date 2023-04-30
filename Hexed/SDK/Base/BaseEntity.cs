@@ -1,4 +1,5 @@
-﻿using Hexed.Memory;
+﻿using Hexed.Core;
+using Hexed.Memory;
 using Hexed.Wrappers;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -29,7 +30,7 @@ namespace Hexed.SDK.Base
 
         public void Update()
         {
-            readData = MemorySettings.Memory.ReadByteArray(address, MemorySettings.NetVars.MaxValue() + Marshal.SizeOf(typeof(Vector3)));
+            readData = MemoryHandler.Memory.ReadByteArray(address, MemoryHandler.NetVars.MaxValue() + Marshal.SizeOf(typeof(Vector3)));
         }
 
         public IntPtr Address
@@ -46,34 +47,34 @@ namespace Hexed.SDK.Base
 
         public int GetIndex()
         {
-            return BitConverter.ToInt32(readData, MemorySettings.NetVars["m_dwIndex"].ToInt32());
+            return BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_dwIndex"].ToInt32());
         }
 
         public bool IsDormant()
         {
-            return BitConverter.ToBoolean(readData, MemorySettings.NetVars["m_bDormant"].ToInt32());
+            return BitConverter.ToBoolean(readData, MemoryHandler.NetVars["m_bDormant"].ToInt32());
         }
 
         public ClientClass GetClientClass()
         {
             var vt = new IntPtr(BitConverter.ToInt32(readData, 8));
-            var fn = MemorySettings.Memory.Read<IntPtr>(vt + 8);
-            var result = MemorySettings.Memory.Read<IntPtr>(fn + 1);
-            return MemorySettings.Memory.Read<ClientClass>(result);
+            var fn = MemoryHandler.Memory.Read<IntPtr>(vt + 8);
+            var result = MemoryHandler.Memory.Read<IntPtr>(fn + 1);
+            return MemoryHandler.Memory.Read<ClientClass>(result);
         }
 
         public int GetClientClassAddress()
         {
             var vt = new IntPtr(BitConverter.ToInt32(readData, 8));
-            var fn = MemorySettings.Memory.Read<IntPtr>(vt + 8);
-            var result = MemorySettings.Memory.Read<int>(fn + 1);
+            var fn = MemoryHandler.Memory.Read<IntPtr>(vt + 8);
+            var result = MemoryHandler.Memory.Read<int>(fn + 1);
             return result;
         }
 
         public Vector3 GetPosition()
         {
             byte[] vecData = new byte[12];
-            Buffer.BlockCopy(readData, MemorySettings.NetVars["m_vecOrigin"].ToInt32(), vecData, 0, 12);
+            Buffer.BlockCopy(readData, MemoryHandler.NetVars["m_vecOrigin"].ToInt32(), vecData, 0, 12);
             return ProcessMemory.BytesTo<Vector3>(vecData);
         }
     }

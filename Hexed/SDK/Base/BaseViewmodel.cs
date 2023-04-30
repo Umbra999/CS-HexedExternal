@@ -1,4 +1,5 @@
-﻿using Hexed.Memory;
+﻿using Hexed.Core;
+using Hexed.Memory;
 
 namespace Hexed.SDK.Base
 {
@@ -8,12 +9,12 @@ namespace Hexed.SDK.Base
 
         public int GetModelIndex()
         {
-            return BitConverter.ToInt32(readData, MemorySettings.NetVars["m_nModelIndex"].ToInt32());
+            return BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_nModelIndex"].ToInt32());
         }
 
         public int GetWeapon()
         {
-            return BitConverter.ToInt32(readData, MemorySettings.NetVars["m_hWeapon"].ToInt32()) & 0xFFF;
+            return BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_hWeapon"].ToInt32()) & 0xFFF;
         }
 
         public void GetModelIndex(string modelName)
@@ -45,23 +46,23 @@ namespace Hexed.SDK.Base
                     0xFF, 0xD0,                     // call eax
                     0xC3                            // ret
                 };
-                stub = MemorySettings.Memory.Allocate(opcodes.Length);
-                MemorySettings.Memory.WriteByteArray(stub.Address, opcodes);
-                namePtr = MemorySettings.Memory.Allocate(modelName.Length * 2 + 1);
-                MemorySettings.Memory.Write(stub.Address + 11, namePtr.Address); //thisptr
+                stub = MemoryHandler.Memory.Allocate(opcodes.Length);
+                MemoryHandler.Memory.WriteByteArray(stub.Address, opcodes);
+                namePtr = MemoryHandler.Memory.Allocate(modelName.Length * 2 + 1);
+                MemoryHandler.Memory.Write(stub.Address + 11, namePtr.Address); //thisptr
 
                 written = true;
             }
 
-            var virtualMethod = MemorySettings.Memory.GetVirtualFunction(address, 242);
+            var virtualMethod = MemoryHandler.Memory.GetVirtualFunction(address, 242);
 
-            MemorySettings.Memory.WriteString(namePtr.Address, modelName, System.Text.Encoding.UTF8);
+            MemoryHandler.Memory.WriteString(namePtr.Address, modelName, System.Text.Encoding.UTF8);
 
-            MemorySettings.Memory.Write(stub.Address + 1, address);
-            MemorySettings.Memory.Write(stub.Address + 6, weapon);
-            MemorySettings.Memory.Write(stub.Address + 16, virtualMethod);
+            MemoryHandler.Memory.Write(stub.Address + 1, address);
+            MemoryHandler.Memory.Write(stub.Address + 6, weapon);
+            MemoryHandler.Memory.Write(stub.Address + 16, virtualMethod);
 
-            MemorySettings.Memory.Execute(stub.Address);
+            MemoryHandler.Memory.Execute(stub.Address);
         }
     }
 }

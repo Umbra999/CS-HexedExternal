@@ -1,4 +1,4 @@
-﻿using Hexed.Memory;
+﻿using Hexed.Core;
 using System.Numerics;
 using static Hexed.SDK.Objects.Enums;
 
@@ -15,7 +15,7 @@ namespace Hexed.SDK.Objects
 
             public RecvProp[] GetProps()
             {
-                return MemorySettings.Memory.ReadArray<RecvProp>(m_pProps, m_nProps);
+                return MemoryHandler.Memory.ReadArray<RecvProp>(m_pProps, m_nProps);
             }
 
             public int GetNumProps()
@@ -30,7 +30,7 @@ namespace Hexed.SDK.Objects
 
             public string GetTablename()
             {
-                return MemorySettings.Memory.ReadString(m_pNetTableName);
+                return MemoryHandler.Memory.ReadString(m_pNetTableName);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Hexed.SDK.Objects
 
             public string GetClassName()
             {
-                return MemorySettings.Memory.ReadString(m_pClassName);
+                return MemoryHandler.Memory.ReadString(m_pClassName);
             }
 
             public ClassId GetClassId()
@@ -55,12 +55,12 @@ namespace Hexed.SDK.Objects
 
             public RecvTable GetRecvTable()
             {
-                return MemorySettings.Memory.Read<RecvTable>(m_pRecvTable);
+                return MemoryHandler.Memory.Read<RecvTable>(m_pRecvTable);
             }
 
             public ClientClass GetNextClass()
             {
-                return MemorySettings.Memory.Read<ClientClass>(m_pNext);
+                return MemoryHandler.Memory.Read<ClientClass>(m_pNext);
             }
         }
 
@@ -84,12 +84,12 @@ namespace Hexed.SDK.Objects
 
             public string GetVarName()
             {
-                return MemorySettings.Memory.ReadString(m_pVarName);
+                return MemoryHandler.Memory.ReadString(m_pVarName);
             }
 
             public string GetParentPropName()
             {
-                return MemorySettings.Memory.ReadString(m_pParentArrayPropName);
+                return MemoryHandler.Memory.ReadString(m_pParentArrayPropName);
             }
 
             public SendPropType GetPropType()
@@ -114,7 +114,7 @@ namespace Hexed.SDK.Objects
 
             public RecvTable GetDataTable()
             {
-                return MemorySettings.Memory.Read<RecvTable>(m_pDataTable);
+                return MemoryHandler.Memory.Read<RecvTable>(m_pDataTable);
             }
         }
 

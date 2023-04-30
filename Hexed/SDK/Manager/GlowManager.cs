@@ -1,6 +1,6 @@
 ﻿using Hexed.Memory.Manager;
-using Hexed.Memory;
 using static Hexed.SDK.Objects.Structs;
+using Hexed.Core;
 
 namespace Hexed.SDK.Manager
 {
@@ -20,7 +20,7 @@ namespace Hexed.SDK.Manager
         {
             get
             {
-                return MemorySettings.Memory.Read<int>(GetGlowBase() + 0xC);
+                return MemoryHandler.Memory.Read<int>(GetGlowBase() + 0xC);
             }
         }
 
@@ -28,7 +28,7 @@ namespace Hexed.SDK.Manager
         {
             get
             {
-                return MemorySettings.Memory.ReadArray<GlowObject>(MemorySettings.Memory.Read<IntPtr>(GetGlowBase()), ObjectCount);
+                return MemoryHandler.Memory.ReadArray<GlowObject>(MemoryHandler.Memory.Read<IntPtr>(GetGlowBase()), ObjectCount);
             }
         }
     }

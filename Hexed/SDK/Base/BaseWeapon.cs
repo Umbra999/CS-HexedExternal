@@ -1,4 +1,5 @@
-﻿using Hexed.Memory;
+﻿using Hexed.Core;
+using Hexed.SDK.Manager;
 using Hexed.Wrappers;
 using static Hexed.SDK.Objects.Enums;
 
@@ -10,18 +11,18 @@ namespace Hexed.SDK.Base
 
         public ItemDefinitionIndex GetItemDefinitionIndex()
         {
-            return (ItemDefinitionIndex)BitConverter.ToInt32(readData, MemorySettings.NetVars["m_ItemDefIndex"].ToInt32());
+            return (ItemDefinitionIndex)BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_ItemDefIndex"].ToInt32());
         }
 
         public int PaintKit
         {
             get
             {
-                return BitConverter.ToInt32(readData, MemorySettings.NetVars["m_nPaintKit"].ToInt32());
+                return BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_nPaintKit"].ToInt32());
             }
             set
             {
-                MemorySettings.Memory.Write(address.Add(MemorySettings.NetVars["m_nPaintKit"]), value);
+                MemoryHandler.Memory.Write(address.Add(MemoryHandler.NetVars["m_nPaintKit"]), value);
             }
         }
 
@@ -29,19 +30,19 @@ namespace Hexed.SDK.Base
         {
             get
             {
-                return BitConverter.ToInt32(readData, MemorySettings.NetVars["m_iItemIDHigh"].ToInt32());
+                return BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_iItemIDHigh"].ToInt32());
             }
             set
             {
-                MemorySettings.Memory.Write(address.Add(MemorySettings.NetVars["m_iItemIDHigh"]), value);
+                MemoryHandler.Memory.Write(address.Add(MemoryHandler.NetVars["m_iItemIDHigh"]), value);
             }
         }
 
         public BasePlayer GetOwner()
         {
-            int index = BitConverter.ToInt32(readData, MemorySettings.NetVars["m_hOwner"].ToInt32());
+            int index = BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_hOwner"].ToInt32());
             index &= 0xFFF;
-            return SDKSettings.EntityList.GetPlayerByIndex(index);
+            return EntityManager.EntityList.GetPlayerByIndex(index);
         }
 
         public string GetWeaponName()
@@ -70,7 +71,7 @@ namespace Hexed.SDK.Base
 
         public int GetState()
         {
-            return BitConverter.ToInt16(readData, MemorySettings.NetVars["m_iState"].ToInt32());
+            return BitConverter.ToInt16(readData, MemoryHandler.NetVars["m_iState"].ToInt32());
         }
     }
 }

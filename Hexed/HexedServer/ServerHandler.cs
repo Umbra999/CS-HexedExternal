@@ -6,9 +6,7 @@ namespace Hexed.HexedServer
 {
     internal class ServerHandler
     {
-        private static string Key = "";
-        private static string HWID = "";
-        public static Dictionary<string, string> OverseeUsers = new();
+        private static string Token;
 
         public static async Task Init()
         {
@@ -20,10 +18,7 @@ namespace Hexed.HexedServer
                 File.WriteAllText("Key.Hexed", Encryption.ToBase64(NewKey));
             }
 
-            Key = Encryption.FromBase64(File.ReadAllText("Key.Hexed"));
-            HWID = Encryption.GetHWID();
-
-            if (!await IsValidKey())
+            if (!await IsValidKey(Encryption.FromBase64(File.ReadAllText("Key.Hexed"))))
             {
                 Logger.LogError("Key is not Valid");
                 await Task.Delay(3000);
@@ -34,32 +29,34 @@ namespace Hexed.HexedServer
         private static async Task<string> FetchTime()
         {
             HttpClient Client = new(new HttpClientHandler { UseCookies = false });
-            Client.DefaultRequestHeaders.Add("User-Agent", "Hexed");
+            Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Hexed)");
 
-            HttpRequestMessage Payload = new(HttpMethod.Get, Encryption.FromBase64("aHR0cDovLzYyLjY4Ljc1LjUyOjk5OS9TZXJ2ZXIvVGltZQ=="));
+            HttpRequestMessage Payload = new(HttpMethod.Get, "https://api.logout.rip/Server/Time");
             HttpResponseMessage Response = await Client.SendAsync(Payload);
             if (Response.IsSuccessStatusCode) return await Response.Content.ReadAsStringAsync();
             return null;
         }
 
-        private static async Task<bool> IsValidKey()
+        private static async Task<bool> IsValidKey(string Key)
         {
             string Timestamp = await FetchTime();
 
             HttpClient Client = new(new HttpClientHandler { UseCookies = false });
-            Client.DefaultRequestHeaders.Add("User-Agent", "Hexed");
+            Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Hexed)");
 
-            HttpRequestMessage Payload = new(HttpMethod.Post, Encryption.FromBase64("aHR0cDovLzYyLjY4Ljc1LjUyOjk5OS9TZXJ2ZXIvSXNWYWxpZA=="))
+            HttpRequestMessage Payload = new(HttpMethod.Post, "https://api.logout.rip/Server/IsValid")
             {
-                Content = new StringContent(JsonConvert.SerializeObject(new { Auth = Encryption.EncryptAuthKey(Key, Timestamp, "XD6V", HWID) }), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonConvert.SerializeObject(new { Auth = Encryption.EncryptAuthKey(Key, Timestamp, Encryption.GetHWID()) }), Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage Response = await Client.SendAsync(Payload);
 
             if (Response.IsSuccessStatusCode)
             {
-                return Convert.ToBoolean(await Response.Content.ReadAsStringAsync());
+                Token = await Response.Content.ReadAsStringAsync();
+                return true;
             }
+
             return false;
         }
     }
