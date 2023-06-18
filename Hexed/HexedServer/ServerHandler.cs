@@ -6,7 +6,7 @@ namespace Hexed.HexedServer
 {
     internal class ServerHandler
     {
-        private static string Token;
+        private static ServerObjects.UserData UserData;
 
         public static async Task Init()
         {
@@ -18,7 +18,9 @@ namespace Hexed.HexedServer
                 File.WriteAllText("Key.Hexed", Encryption.ToBase64(NewKey));
             }
 
-            if (!await IsValidKey(Encryption.FromBase64(File.ReadAllText("Key.Hexed"))))
+            UserData = await Login(Encryption.FromBase64(File.ReadAllText("Key.Hexed")));
+
+            if (UserData == null || !UserData.KeyAccess.Contains(ServerObjects.KeyPermissionType.CSGO))
             {
                 Logger.LogError("Key is not Valid");
                 await Task.Delay(3000);
@@ -37,27 +39,25 @@ namespace Hexed.HexedServer
             return null;
         }
 
-        private static async Task<bool> IsValidKey(string Key)
+        private static async Task<ServerObjects.UserData> Login(string Key)
         {
-            string Timestamp = await FetchTime();
-
             HttpClient Client = new(new HttpClientHandler { UseCookies = false });
             Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Hexed)");
 
-            HttpRequestMessage Payload = new(HttpMethod.Post, "https://api.logout.rip/Server/IsValid")
+            HttpRequestMessage Payload = new(HttpMethod.Post, "https://api.logout.rip/Server/Login")
             {
-                Content = new StringContent(JsonConvert.SerializeObject(new { Auth = Encryption.EncryptAuthKey(Key, Timestamp, Encryption.GetHWID()) }), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonConvert.SerializeObject(new { Auth = Encryption.EncryptAuthKey(Key, await FetchTime(), Encryption.GetHWID()) }), Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage Response = await Client.SendAsync(Payload);
 
             if (Response.IsSuccessStatusCode)
             {
-                Token = await Response.Content.ReadAsStringAsync();
-                return true;
+                string RawData = await Response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<ServerObjects.UserData>(RawData);
             }
 
-            return false;
+            return null;
         }
     }
 }
