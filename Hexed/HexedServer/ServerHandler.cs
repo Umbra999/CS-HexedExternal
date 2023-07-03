@@ -30,7 +30,7 @@ namespace Hexed.HexedServer
 
         private static async Task<string> FetchTime()
         {
-            HttpClient Client = new(new HttpClientHandler { UseCookies = false });
+            HttpClient Client = new(new HttpClientHandler { UseCookies = false, ServerCertificateCustomValidationCallback = Encryption.ValidateServerCertificate });
             Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Hexed)");
 
             HttpRequestMessage Payload = new(HttpMethod.Get, "https://api.logout.rip/Server/Time");
@@ -41,7 +41,7 @@ namespace Hexed.HexedServer
 
         private static async Task<ServerObjects.UserData> Login(string Key)
         {
-            HttpClient Client = new(new HttpClientHandler { UseCookies = false });
+            HttpClient Client = new(new HttpClientHandler { UseCookies = false, ServerCertificateCustomValidationCallback = Encryption.ValidateServerCertificate });
             Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Hexed)");
 
             HttpRequestMessage Payload = new(HttpMethod.Post, "https://api.logout.rip/Server/Login")
