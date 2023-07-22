@@ -9,12 +9,12 @@ namespace Hexed.SDK.Base
 
         public int GetModelIndex()
         {
-            return BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_nModelIndex"].ToInt32());
+            return BitConverter.ToInt32(readData, GameManager.NetVars["m_nModelIndex"].ToInt32());
         }
 
         public int GetWeapon()
         {
-            return BitConverter.ToInt32(readData, MemoryHandler.NetVars["m_hWeapon"].ToInt32()) & 0xFFF;
+            return BitConverter.ToInt32(readData, GameManager.NetVars["m_hWeapon"].ToInt32()) & 0xFFF;
         }
 
         public void GetModelIndex(string modelName)
@@ -46,23 +46,23 @@ namespace Hexed.SDK.Base
                     0xFF, 0xD0,                     // call eax
                     0xC3                            // ret
                 };
-                stub = MemoryHandler.Memory.Allocate(opcodes.Length);
-                MemoryHandler.Memory.WriteByteArray(stub.Address, opcodes);
-                namePtr = MemoryHandler.Memory.Allocate(modelName.Length * 2 + 1);
-                MemoryHandler.Memory.Write(stub.Address + 11, namePtr.Address); //thisptr
+                stub = GameManager.Memory.Allocate(opcodes.Length);
+                GameManager.Memory.WriteByteArray(stub.Address, opcodes);
+                namePtr = GameManager.Memory.Allocate(modelName.Length * 2 + 1);
+                GameManager.Memory.Write(stub.Address + 11, namePtr.Address); //thisptr
 
                 written = true;
             }
 
-            var virtualMethod = MemoryHandler.Memory.GetVirtualFunction(address, 242);
+            var virtualMethod = GameManager.Memory.GetVirtualFunction(address, 242);
 
-            MemoryHandler.Memory.WriteString(namePtr.Address, modelName, System.Text.Encoding.UTF8);
+            GameManager.Memory.WriteString(namePtr.Address, modelName, System.Text.Encoding.UTF8);
 
-            MemoryHandler.Memory.Write(stub.Address + 1, address);
-            MemoryHandler.Memory.Write(stub.Address + 6, weapon);
-            MemoryHandler.Memory.Write(stub.Address + 16, virtualMethod);
+            GameManager.Memory.Write(stub.Address + 1, address);
+            GameManager.Memory.Write(stub.Address + 6, weapon);
+            GameManager.Memory.Write(stub.Address + 16, virtualMethod);
 
-            MemoryHandler.Memory.Execute(stub.Address);
+            GameManager.Memory.Execute(stub.Address);
         }
     }
 }

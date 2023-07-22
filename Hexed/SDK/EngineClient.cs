@@ -15,8 +15,7 @@ namespace Hexed.SDK
         private static IntPtr cmdNumber;
         private static IntPtr gameDir;
         private static IntPtr sendPacket;
-        //private static string previousMap;
-        //private static BspFile cachedMap;
+        private static IntPtr viewMatrix;
 
 
         public static IntPtr ClientState
@@ -28,7 +27,7 @@ namespace Hexed.SDK
                     Thread.Sleep(10);
                     clientState = SignatureManager.GetClientState();
                 }
-                return MemoryHandler.Memory.Read<IntPtr>(clientState);
+                return GameManager.Memory.Read<IntPtr>(clientState);
             }
         }
 
@@ -36,9 +35,8 @@ namespace Hexed.SDK
         {
             get
             {
-                if (signOnState == IntPtr.Zero)
-                    signOnState = SignatureManager.GetSignOnState();
-                return MemoryHandler.Memory.Read<int>(ClientState.Add(signOnState)) == 0;
+                if (signOnState == IntPtr.Zero) signOnState = SignatureManager.GetSignOnState();
+                return GameManager.Memory.Read<int>(ClientState.Add(signOnState)) == 0;
             }
         }
 
@@ -46,9 +44,8 @@ namespace Hexed.SDK
         {
             get
             {
-                if (signOnState == IntPtr.Zero)
-                    signOnState = SignatureManager.GetSignOnState();
-                var state = MemoryHandler.Memory.Read<int>(ClientState.Add(signOnState));
+                if (signOnState == IntPtr.Zero)  signOnState = SignatureManager.GetSignOnState();
+                var state = GameManager.Memory.Read<int>(ClientState.Add(signOnState));
                 return state > 1 || state < 7;
             }
         }
@@ -57,11 +54,8 @@ namespace Hexed.SDK
         {
             get
             {
-                if (localIndex == IntPtr.Zero)
-                {
-                    localIndex = SignatureManager.GetLocalIndex();
-                }
-                var index = MemoryHandler.Memory.Read<int>(ClientState.Add(localIndex));
+                if (localIndex == IntPtr.Zero) localIndex = SignatureManager.GetLocalIndex();
+                var index = GameManager.Memory.Read<int>(ClientState.Add(localIndex));
                 return index;
             }
         }
@@ -70,11 +64,8 @@ namespace Hexed.SDK
         {
             get
             {
-                if (cmdNumber == IntPtr.Zero)
-                {
-                    cmdNumber = SignatureManager.GetCmdNumber();
-                }
-                var num = MemoryHandler.Memory.Read<int>(ClientState.Add(cmdNumber));
+                if (cmdNumber == IntPtr.Zero) cmdNumber = SignatureManager.GetCmdNumber();
+                var num = GameManager.Memory.Read<int>(ClientState.Add(cmdNumber));
                 return num;
             }
         }
@@ -83,19 +74,13 @@ namespace Hexed.SDK
         {
             get
             {
-                if (sendPacket == IntPtr.Zero)
-                {
-                    sendPacket = SignatureManager.GetSendPacket();
-                }
-                return MemoryHandler.Memory.Read<bool>(sendPacket);
+                if (sendPacket == IntPtr.Zero) sendPacket = SignatureManager.GetSendPacket();
+                return GameManager.Memory.Read<bool>(sendPacket);
             }
             set
             {
-                if (sendPacket == IntPtr.Zero)
-                {
-                    sendPacket = SignatureManager.GetSendPacket();
-                }
-                MemoryHandler.Memory.Write(sendPacket, value);
+                if (sendPacket == IntPtr.Zero) sendPacket = SignatureManager.GetSendPacket();
+                GameManager.Memory.Write(sendPacket, value);
             }
         }
 
@@ -103,11 +88,8 @@ namespace Hexed.SDK
         {
             get
             {
-                if (mapName == IntPtr.Zero)
-                {
-                    mapName = SignatureManager.GetMapName();
-                }
-                var name = MemoryHandler.Memory.ReadString(ClientState.Add(mapName));
+                if (mapName == IntPtr.Zero) mapName = SignatureManager.GetMapName();
+                var name = GameManager.Memory.ReadString(ClientState.Add(mapName));
                 return name;
             }
         }
@@ -116,39 +98,38 @@ namespace Hexed.SDK
         {
             get
             {
-                if (gameDir == IntPtr.Zero)
-                {
-                    gameDir = SignatureManager.GetGameDir();
-                }
-                return MemoryHandler.Memory.ReadString(gameDir);
+                if (gameDir == IntPtr.Zero) gameDir = SignatureManager.GetGameDir();
+                return GameManager.Memory.ReadString(gameDir);
             }
         }
 
-        //public static BspFile Map
-        //{
-        //    get
-        //    {
-        //        var currentMap = MapName;
-        //        if ((previousMap != currentMap || cachedMap == null) && currentMap.EndsWith(".bsp"))
-        //        {
-        //            previousMap = currentMap;
-        //            cachedMap = new BspFile($"{GameDirectory}\\{currentMap}");
-        //        }
-        //        return cachedMap;
-        //    }
-        //}
+        public static float[] ViewMatrix
+        {
+            get
+            {
+                if (viewMatrix == IntPtr.Zero) viewMatrix = SignatureManager.GetWorldToViewMatrix();
+
+                float[] temp = new float[16];
+                for (int i = 0; i < 16; i++)
+                {
+                    temp[i] = GameManager.Memory.Read<float>(viewMatrix + (i * 0x4));
+                }
+                    
+                return temp;
+            }
+        }
 
         public static Vector3 ViewAngles
         {
             get
             {
                 if (viewAngle == IntPtr.Zero) viewAngle = SignatureManager.GetViewAngle();
-                return MemoryHandler.Memory.Read<Vector3>(ClientState.Add(viewAngle));
+                return GameManager.Memory.Read<Vector3>(ClientState.Add(viewAngle));
             }
             set
             {
                 if (viewAngle == IntPtr.Zero) viewAngle = SignatureManager.GetViewAngle();
-                MemoryHandler.Memory.Write(ClientState.Add(viewAngle), value);
+                GameManager.Memory.Write(ClientState.Add(viewAngle), value);
 
             }
         }

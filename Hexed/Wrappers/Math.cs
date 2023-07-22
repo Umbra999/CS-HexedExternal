@@ -1,22 +1,13 @@
-﻿using System.Numerics;
+﻿using Hexed.Core;
+using Hexed.SDK;
+using System.Drawing;
+using System.Numerics;
 using static Hexed.SDK.Objects.Enums;
 
 namespace Hexed.Wrappers
 {
     internal static class Math
     {
-        public static bool IsPointInRadius(Vector2 point, Vector2 center, float radius)
-        {
-            return System.Math.Sqrt(((center.X - point.X) * (center.X - point.X)) + ((center.Y - point.Y) * (center.Y - point.Y))) < radius;
-        }
-
-        public static float DistanceToPoint(Vector2 point, Vector2 otherPoint)
-        {
-            float ydist = (otherPoint.Y - point.Y);
-            float xdist = (otherPoint.X - point.X);
-            float hypotenuse = Convert.ToSingle(System.Math.Sqrt(System.Math.Pow(ydist, 2) + System.Math.Pow(xdist, 2)));
-            return hypotenuse;
-        }
 
         public static string ByteSizeToString(long size)
         {
@@ -84,7 +75,51 @@ namespace Hexed.Wrappers
 
             foreach (var item in sorted)
                 dict.Add(item.Key, item.Value);
+        }
 
+        public static Vector2 WorldToScreen(Vector3 target, Vector2 Screen)
+        {
+            Vector2 _worldToScreenPos;
+            Vector3 to;
+            float[] viewmatrix = EngineClient.ViewMatrix;
+
+            to.X = viewmatrix[0] * target.X + viewmatrix[1] * target.Y + viewmatrix[2] * target.Z + viewmatrix[3];
+            to.Y = viewmatrix[4] * target.X + viewmatrix[5] * target.Y + viewmatrix[6] * target.Z + viewmatrix[7];
+
+            float w = viewmatrix[12] * target.X + viewmatrix[13] * target.Y + viewmatrix[14] * target.Z + viewmatrix[15];
+
+            if (w < 0.01f) return new Vector2(0, 0);
+
+            to.X *= (1.0f / w);
+            to.Y *= (1.0f / w);
+
+            float x = Screen.X / 2;
+            float y = Screen.Y / 2;
+
+            x += 0.5f * to.X * Screen.X + 0.5f;
+            y -= 0.5f * to.Y * Screen.Y + 0.5f;
+
+            to.X = x;
+            to.Y = y;
+
+            _worldToScreenPos.X = to.X;
+            _worldToScreenPos.Y = to.Y;
+            return _worldToScreenPos;
+        }
+
+        public static Color MapHealthToColor(float value)
+        {
+            // Ensure the value is within the valid range (0 to 100)
+            value = System.Math.Max(0, System.Math.Min(100, value));
+
+            // Calculate the Red and Green components based on the value
+            int red = (int)(255 * (1 - value / 100));
+            int green = (int)(255 * (value / 100));
+
+            // Create a new Color object with the calculated RGB values
+            Color color = Color.FromArgb(red, green, 0);
+
+            return color;
         }
     }
 }

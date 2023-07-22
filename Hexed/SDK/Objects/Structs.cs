@@ -15,7 +15,7 @@ namespace Hexed.SDK.Objects
 
             public RecvProp[] GetProps()
             {
-                return MemoryHandler.Memory.ReadArray<RecvProp>(m_pProps, m_nProps);
+                return GameManager.Memory.ReadArray<RecvProp>(m_pProps, m_nProps);
             }
 
             public int GetNumProps()
@@ -30,7 +30,7 @@ namespace Hexed.SDK.Objects
 
             public string GetTablename()
             {
-                return MemoryHandler.Memory.ReadString(m_pNetTableName);
+                return GameManager.Memory.ReadString(m_pNetTableName);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Hexed.SDK.Objects
 
             public string GetClassName()
             {
-                return MemoryHandler.Memory.ReadString(m_pClassName);
+                return GameManager.Memory.ReadString(m_pClassName);
             }
 
             public ClassId GetClassId()
@@ -55,12 +55,12 @@ namespace Hexed.SDK.Objects
 
             public RecvTable GetRecvTable()
             {
-                return MemoryHandler.Memory.Read<RecvTable>(m_pRecvTable);
+                return GameManager.Memory.Read<RecvTable>(m_pRecvTable);
             }
 
             public ClientClass GetNextClass()
             {
-                return MemoryHandler.Memory.Read<ClientClass>(m_pNext);
+                return GameManager.Memory.Read<ClientClass>(m_pNext);
             }
         }
 
@@ -84,12 +84,12 @@ namespace Hexed.SDK.Objects
 
             public string GetVarName()
             {
-                return MemoryHandler.Memory.ReadString(m_pVarName);
+                return GameManager.Memory.ReadString(m_pVarName);
             }
 
             public string GetParentPropName()
             {
-                return MemoryHandler.Memory.ReadString(m_pParentArrayPropName);
+                return GameManager.Memory.ReadString(m_pParentArrayPropName);
             }
 
             public SendPropType GetPropType()
@@ -114,7 +114,7 @@ namespace Hexed.SDK.Objects
 
             public RecvTable GetDataTable()
             {
-                return MemoryHandler.Memory.Read<RecvTable>(m_pDataTable);
+                return GameManager.Memory.Read<RecvTable>(m_pDataTable);
             }
         }
 

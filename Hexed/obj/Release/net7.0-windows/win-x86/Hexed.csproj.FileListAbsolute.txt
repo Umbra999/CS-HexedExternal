@@ -15,3 +15,7 @@ D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0-windows\win-x86\refint
 D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0-windows\win-x86\Hexed.pdb
 D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0-windows\win-x86\Hexed.genruntimeconfig.cache
 D:\Github Repos\CS-HexedExternal\Hexed\obj\Release\net7.0-windows\win-x86\ref\Hexed.dll
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0-windows\win-x86\GameOverlay.dll
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0-windows\win-x86\SharpDX.dll
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0-windows\win-x86\SharpDX.Direct2D1.dll
+D:\Github Repos\CS-HexedExternal\Hexed\bin\Release\net7.0-windows\win-x86\SharpDX.DXGI.dll

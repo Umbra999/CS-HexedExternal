@@ -16,10 +16,10 @@ namespace Hexed.Memory.Manager
 
         private static IntPtr SearchInSubSubTable(IntPtr subTable, string searchFor)
         {
-            IntPtr current = MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(subTable + 0x28));
+            IntPtr current = GameManager.Memory.Read<IntPtr>(GameManager.Memory.Read<IntPtr>(subTable + 0x28));
             while (true)
             {
-                string entryName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current));
+                string entryName = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(current));
 
                 if (entryName == "") break;
 
@@ -27,11 +27,11 @@ namespace Hexed.Memory.Manager
 
                 if (entryName.Length > 3)
                 {
-                    IntPtr offset = MemoryHandler.Memory.Read<IntPtr>(current + 0x2C);
+                    IntPtr offset = GameManager.Memory.Read<IntPtr>(current + 0x2C);
                     if (entryName.Equals(searchFor)) return offset;
                 }
 
-                IntPtr subSubTable = MemoryHandler.Memory.Read<IntPtr>(current + 0x28);
+                IntPtr subSubTable = GameManager.Memory.Read<IntPtr>(current + 0x28);
 
                 if (subSubTable != IntPtr.Zero)
                 {
@@ -50,7 +50,7 @@ namespace Hexed.Memory.Manager
             IntPtr current = subTable;
             while (true)
             {
-                string entryName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current));
+                string entryName = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(current));
 
                 if (entryName == "") break;
 
@@ -74,7 +74,7 @@ namespace Hexed.Memory.Manager
                     if (a != IntPtr.Zero) return a;
                 }
 
-                int subSubTable = MemoryHandler.Memory.Read<int>(current + 0x28);
+                int subSubTable = GameManager.Memory.Read<int>(current + 0x28);
 
                 if (subSubTable > 0)
                 {
@@ -82,7 +82,7 @@ namespace Hexed.Memory.Manager
                     if (a != IntPtr.Zero) return a;
                 }
 
-                IntPtr offset = MemoryHandler.Memory.Read<IntPtr>(current + 0x2C);
+                IntPtr offset = GameManager.Memory.Read<IntPtr>(current + 0x2C);
                 if (entryName == searchFor) return offset;
 
                 current += 0x3C;
@@ -96,9 +96,9 @@ namespace Hexed.Memory.Manager
             IntPtr a = SearchInSubtable(baseClass + 0x3C, searchFor);
             if (a != IntPtr.Zero) return a;
 
-            string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(baseClass));
+            string className = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(baseClass));
 
-            if (className == "baseclass") return SearchInBaseClass(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(baseClass + 0x28)), searchFor);
+            if (className == "baseclass") return SearchInBaseClass(GameManager.Memory.Read<IntPtr>(GameManager.Memory.Read<IntPtr>(baseClass + 0x28)), searchFor);
 
             return IntPtr.Zero;
         }
@@ -108,9 +108,9 @@ namespace Hexed.Memory.Manager
             IntPtr a = SearchInSubtable(csLocalData + 0x28, searchFor);
             if (a != IntPtr.Zero) return a;
 
-            string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(csLocalData));
+            string className = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(csLocalData));
 
-            if (className == "cslocaldata") return SearchInBaseClass(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(csLocalData + 0x28)), searchFor);
+            if (className == "cslocaldata") return SearchInBaseClass(GameManager.Memory.Read<IntPtr>(GameManager.Memory.Read<IntPtr>(csLocalData + 0x28)), searchFor);
 
             return IntPtr.Zero;
         }
@@ -121,21 +121,21 @@ namespace Hexed.Memory.Manager
 
             if (a != IntPtr.Zero) return a;
 
-            string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(localData));
+            string className = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(localData));
 
-            if (className == "localdata") return SearchInBaseClass(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(localData + 0x28)), searchFor);
+            if (className == "localdata") return SearchInBaseClass(GameManager.Memory.Read<IntPtr>(GameManager.Memory.Read<IntPtr>(localData + 0x28)), searchFor);
 
             return IntPtr.Zero;
         }
 
         private static IntPtr SearchInTableFor(IntPtr table, string searchFor)
         {
-            IntPtr current = MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(table + 0xC));
+            IntPtr current = GameManager.Memory.Read<IntPtr>(GameManager.Memory.Read<IntPtr>(table + 0xC));
             while (true)
             {
-                if (MemoryHandler.Memory.Read<IntPtr>(current) == IntPtr.Zero) break;
+                if (GameManager.Memory.Read<IntPtr>(current) == IntPtr.Zero) break;
 
-                string entryName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current));
+                string entryName = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(current));
 
                 if (entryName.Length < 1) break;
 
@@ -145,7 +145,7 @@ namespace Hexed.Memory.Manager
 
                 if (entryName == "localdata") return SearchInLocalData(current, searchFor);
 
-                IntPtr offset = MemoryHandler.Memory.Read<IntPtr>(current + 0x2C);
+                IntPtr offset = GameManager.Memory.Read<IntPtr>(current + 0x2C);
                 if (entryName.Equals(searchFor)) return offset;
 
                 current += 0x3C;
@@ -161,12 +161,12 @@ namespace Hexed.Memory.Manager
 
             while (true)
             {
-                string className = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(current + 0x8));
-                string tableName = MemoryHandler.Memory.ReadString(MemoryHandler.Memory.Read<IntPtr>(MemoryHandler.Memory.Read<IntPtr>(current + 0xC) + 0xC));
+                string className = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(current + 0x8));
+                string tableName = GameManager.Memory.ReadString(GameManager.Memory.Read<IntPtr>(GameManager.Memory.Read<IntPtr>(current + 0xC) + 0xC));
 
                 if (className.Equals(wantedTable) || tableName.Equals(wantedTable)) return current;
 
-                current = MemoryHandler.Memory.Read<IntPtr>(current + 0x10);
+                current = GameManager.Memory.Read<IntPtr>(current + 0x10);
                 if (current == IntPtr.Zero) break;
             }
 
