@@ -3,7 +3,6 @@ using GameOverlay.Windows;
 using Hexed.Extensions;
 using Hexed.SDK.Base;
 using Hexed.Wrappers;
-using System.Drawing;
 using System.Numerics;
 
 namespace Hexed.Core
