@@ -1,6 +1,5 @@
 ﻿using Hexed.Core;
 using Hexed.Extensions;
-using Hexed.HexedServer;
 using Hexed.Memory;
 using Hexed.Memory.Manager;
 using Hexed.Modules;
@@ -13,11 +12,6 @@ namespace Hexed
     {
         public static void Main()
         {
-            Console.Title = Encryption.RandomString(16);
-
-            Task Auth = Task.Run(ServerHandler.Init);
-            Auth.Wait();
-
             Logger.Log($"Waiting for Process...");
 
             Process process = null;
